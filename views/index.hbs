@@ -1,0 +1,107 @@
+
+             <main class="mastcontent">
+                 <section class="intro-copy padding-y padding-lg">
+                     <div class="container">
+                         <div class="grid">
+                             <div class="grid__column grid__column--12 grid__column--12--md">
+
+                              <h3>Connect to BWPS-WIFI to control the images </h3>
+
+                                 <div >
+                                    <table class="table table--stripped">
+                                        <thead class="table__head">
+                                            <tr class="table__row table__row--heading">
+                                                <th class="table__cell">Tent Name</th>
+                                                <th class="table__cell">Tent Type</th>
+                                                <th class="table__cell">Sleeps</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table__body">
+                                            <tr class="table__row">
+                                                <td class="table__cell">Camel 575S</td>
+                                                <td class="table__cell">Dome</td>
+                                                <td class="table__cell">6</td>
+                                            </tr>
+                                            <tr class="table__row">
+                                                <td class="table__cell">Mule 40T</td>
+                                                <td class="table__cell">Dome</td>
+                                                <td class="table__cell">6</td>
+                                            </tr>
+                                            <tr class="table__row">
+                                                <td class="table__cell">Sequoia LT</td>
+                                                <td class="table__cell">Ridge</td>
+                                                <td class="table__cell">2</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+            {{#images}}
+
+            <div id="{{id}}" class="i-grid-item">
+
+
+            </div>
+
+
+            {{/images}}
+            </div>
+         </div>
+
+         </div>
+         </div>
+         </section>
+         </main>
+
+
+
+<script src="/socket.io/socket.io.js" ></script>
+<script src="/javascripts/moveTo.js"></script>
+<script src="/javascripts/queue.js"></script>
+<script>
+
+// get the data from the backend to display
+
+// use rest to get the list of the cards that available
+
+// updae the table to show these details
+
+var queue = new Queue();
+
+console.log('Hello');
+const moveTo = new MoveTo();
+
+var intervalTimer;
+
+var socket = io('//localhost:3000');
+socket.on('socketToMe',  (data) => {
+  // if (queue.isEmpty()){
+  //   clearTimeout(intervalTimer);
+  //   queue.enq(data);
+  //   displayImage();
+  // }else {
+  //   queue.enq(data);
+  // }
+
+  queue.enq(data);
+
+});
+
+displayImage();
+
+function displayImage(){
+  var data;
+  if (queue.isEmpty()) {
+    data = {imagenumber : 1};
+  } else {
+    data = queue.deq();
+  }
+  console.log(data);
+   $('.lb-close').click()
+  const target = document.getElementById(data.imagenumber);
+  moveTo.move(target, {    callback: function (target) {
+    console.log('moved to '+target);
+     $(target).find('a').click();
+     intervalTime = setTimeout(() => { displayImage(); },10000);
+   }});
+}
+
+</script>
