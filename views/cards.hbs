@@ -1,0 +1,50 @@
+<main class="mastcontent">
+    <section class="intro-copy padding-y padding-lg">
+        <div class="container">
+            <div class="grid">
+                <div class="grid__column grid__column--12 grid__column--12--md">
+                    <h3>Tap a picture to show on the display</h3>
+
+                    <div class="i-grid" id="macy-container">
+                       <table class="table table--stripped">
+                           <thead class="table__head">
+                              <tr class="table__row table__row--heading">
+                                   <th class="table__cell">id</th>
+                                   <th class="table__cell">nane</th>
+                                   <th class="table__cell">qty</th>
+                              </tr>
+                           </thead>
+                               <tbody class="table__body">
+{{#cards}}
+
+
+       <tr class="table__row">
+            <td class="table__cell">{{cardId}}</td>
+            <td class="table__cell">{{cardName}}</td>
+            <td class="table__cell">{{qtyAvailble}}</td>
+       </tr>
+
+
+
+
+{{/cards}}
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+</main>
+
+<script>
+$(document).ready(function(){
+    $("a").click(function(){
+      var img = $(this).parent().attr('id')
+        $.get("//192.168.1.102:3000/image/"+img, function(data, status){
+            console.log("Data: " + data + "\nStatus: " + status);
+        });
+    });
+});
+</script>

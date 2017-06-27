@@ -64,8 +64,6 @@
 
 // updae the table to show these details
 
-var queue = new Queue();
-
 console.log('Hello');
 const moveTo = new MoveTo();
 
@@ -73,19 +71,11 @@ var intervalTimer;
 
 var socket = io('//localhost:3000');
 socket.on('socketToMe',  (data) => {
-  // if (queue.isEmpty()){
-  //   clearTimeout(intervalTimer);
-  //   queue.enq(data);
-  //   displayImage();
-  // }else {
-  //   queue.enq(data);
-  // }
 
   queue.enq(data);
 
 });
 
-displayImage();
 
 function displayImage(){
   var data;
